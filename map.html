@@ -3,21 +3,28 @@
   <head>
     <meta charset="utf-8">
     <title>Map</title>
+
     <link href="style.css" rel="stylesheet">
+
+    <!--Leaflet css and js files -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
       integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
       crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
       integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin="">
-    </script>
+      crossorigin=""></script>
+
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+    <!--Leaflet draw plugin -->
+    <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css'>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
   </head>
   <body>
     <div id="mapid"></div>
     <script>
 
       var mapboxUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-
       var mapboxAttribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
                         			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
                         			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
@@ -35,10 +42,18 @@
           "Satellite": satellite,
           "Urban": urban
       };
-
       L.control.layers(baseMaps).addTo(map);
 
+      var featureGroup = L.featureGroup().addTo(map);
+      var drawControl = new L.Control.Draw({
+          edit: {
+              featureGroup: featureGroup
+          }
+      }).addTo(map);
+      map.on('draw:created', function(e) {
+         // Each time a feaute is created, it's added to the over arching feature group
+         featureGroup.addLayer(e.layer);
+      });
     </script>
-
   </body>
 </html>
