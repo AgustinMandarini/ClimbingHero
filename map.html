@@ -44,7 +44,8 @@
       };
       L.control.layers(baseMaps).addTo(map);
 
-      var featureGroup = L.featureGroup().addTo(map);
+      var popuptag = "<b>Sector name</b><br>Routes"
+      var featureGroup = L.featureGroup().bindPopup(popuptag).addTo(map);
       var drawControl = new L.Control.Draw({
           edit: {
               featureGroup: featureGroup
