@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+      <div id="map-container">
+        <div id="map"></div>
+      </div>
+{% endblock %}
+{% block script %}
+  <script src="{{ url_for('static', filename='map.js') }}"></script>
+{% endblock %}

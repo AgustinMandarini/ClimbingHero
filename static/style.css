@@ -1,0 +1,33 @@
+@font-face {
+
+          font-family: amaranth;
+          src: url("Amaranth-Bold.otf") format("opentype");
+        }
+
+body    {
+          margin: 0;
+          padding-top: 50px;
+        }
+
+h2      {
+          text-align: center;
+          padding: 50px;
+        }
+
+#map-container {
+          position: relative;
+          height: 600px;
+          width:600px;
+        }
+
+#map {
+          position: relative;
+          height: inherit;
+          width: inherit;
+        }
+
+.navbar-brand {
+
+          font-family: amaranth !important;
+
+        }

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block leaflet_draw %}
+  <!--Leaflet draw plugin -->
+  <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css'>
+  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
+{% endblock %}
+
+{% block content %}
+  <div id="map-container">
+    <div id="map"></div>
+  </div>
+  <form action="/new_sector" method="post" >
+    <button id="export" class="btn btn-primary" type="submit">Export Features</button>
+  </form>
+  <button id="delete" class="btn btn-danger">Delete Features</button>
+{% endblock %}
+
+{% block script %}
+  <script src="{{ url_for('static', filename='map_edit.js') }}"></script>
+{% endblock %}
