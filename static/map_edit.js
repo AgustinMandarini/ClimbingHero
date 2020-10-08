@@ -36,14 +36,22 @@ document.getElementById('delete').onclick = function(e) {
     featureGroup.clearLayers();
 }
 
-var data = featureGroup.toGeoJSON();
+var data;
 var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
 
+// on click, posts drawn map features to /new sector route
 document.getElementById('export').onclick = function(){
+
+  data = featureGroup.toGeoJSON();
+
   $.ajax({
-  url: "/new_sector",
-  type: "POST",
-  contentType: "application/json",
-  data: JSON.stringify(data),
+    url: "/new_sector",
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(data),
+    // if post is successfull, redirects to /home
+    success: function(){
+      window.location.href = "/home";
+      }
   });
 };

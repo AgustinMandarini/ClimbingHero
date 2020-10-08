@@ -10,8 +10,9 @@ def home():
 
 @app.route('/new_sector', methods = ['GET', 'POST'])
 def new_sector():
-    if request.method == 'POST':
+    if request.method == "POST":
         mapFeatures = request.get_json()
         print(mapFeatures)
-        return redirect(url_for('home'))
+        # redirection is in AJAX call
+        
     return render_template("map_edit.html", title="Map Edit", h2title="Use the map to add new routes!")

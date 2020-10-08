@@ -15,9 +15,7 @@
       <div class="container-fluid"
         <div class="row">
           <div class="col-md-6">
-            <form action="/new_sector" method="post" >
-              <button id="export" class="btn btn-primary">Export Features</button>
-            </form>
+            <button id="export" class="btn btn-primary">Export Features</button>
           </div>
           <div class="col-md-6">
             <button id="delete" class="btn btn-danger">Delete Features</button>
@@ -29,5 +27,5 @@
 {% endblock %}
 
 {% block script %}
-  <script src="{{ url_for('static', filename='map_edit.js') }}"></script>
+  <script src="{{ url_for('static', filename='map_edit.js') }}"></script> 
 {% endblock %}
