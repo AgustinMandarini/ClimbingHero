@@ -27,7 +27,7 @@ var drawControl = new L.Control.Draw({
 }).addTo(map);
 
 map.on('draw:created', function(e) {
-   // Each time a feaute is created, it's added to the over arching feature group
+   // Each time a feauture is created, it's added to the over arching feature group
    featureGroup.addLayer(e.layer);
 });
 
@@ -36,15 +36,14 @@ document.getElementById('delete').onclick = function(e) {
     featureGroup.clearLayers();
 }
 
-var data;
-document.getElementById('export').onclick = function(e) {
-    // Extract GeoJson from featureGroup
-    data = featureGroup.toGeoJSON();
+var data = featureGroup.toGeoJSON();
+var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
 
-    // Stringify the GeoJson
-    var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-
-    // Create export
-    document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-    document.getElementById('export').setAttribute('download','data.geojson');
-}
+document.getElementById('export').onclick = function(){
+  $.ajax({
+  url: "/new_sector",
+  type: "POST",
+  contentType: "application/json",
+  data: JSON.stringify(data),
+  });
+};

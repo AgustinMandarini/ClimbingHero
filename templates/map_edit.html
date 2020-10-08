@@ -7,13 +7,25 @@
 {% endblock %}
 
 {% block content %}
-  <div id="map-container">
-    <div id="map"></div>
+  <div class="contanier-fluid">
+    <div class="row">
+      <div id="map-container">
+        <div id="map"></div>
+      </div>
+      <div class="container-fluid"
+        <div class="row">
+          <div class="col-md-6">
+            <form action="/new_sector" method="post" >
+              <button id="export" class="btn btn-primary">Export Features</button>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <button id="delete" class="btn btn-danger">Delete Features</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <form action="/new_sector" method="post" >
-    <button id="export" class="btn btn-primary" type="submit">Export Features</button>
-  </form>
-  <button id="delete" class="btn btn-danger">Delete Features</button>
 {% endblock %}
 
 {% block script %}
