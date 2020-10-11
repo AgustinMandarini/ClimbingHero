@@ -49,7 +49,7 @@ document.getElementById('export').onclick = function(){
     type: "POST",
     contentType: "application/json",
     data: JSON.stringify(data),
-    // if post is successfull, redirects to /home
+    // if post is successfull, redirects to /home:
     success: function(){
       window.location.href = "/home";
       }

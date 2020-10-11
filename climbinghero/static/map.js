@@ -17,3 +17,7 @@ var baseMaps = {
     "Urban": urban
 };
 L.control.layers(baseMaps).addTo(map);
+
+//Sector areas recieved from /home route
+//featureGroup variable is recieved in map.html template
+L.geoJSON(featureGroup).addTo(map);
