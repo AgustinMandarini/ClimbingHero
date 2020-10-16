@@ -1,8 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-  <div id="map-container">
-    <div id="map"></div>
+<div class="contanier">
+  <div class="row">
+    <div class="col-md-3 btn-group">
+
+        <button class="btn btn-default" type="button">Nuevo Sector</button>
+        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button"></button>
+        <ul class="dropdown-menu">
+          {% for prov in sectors %}
+    		    <li><a href="#">{{ sector.name }}</a></li>
+          {% endfor %}
+        </ul>
+
+    </div>
+    <div class="col-md-9">
+      <div id="map-container">
+        <div id="map"></div>
+      </div>
+    </div>
   </div>
+</div>
+
 {% endblock %}
 {% block script %}
   <script> var featureGroup = {{ sectorsArea | safe }} </script>

@@ -11,13 +11,13 @@ body    {
 
 h2      {
           text-align: center;
-          padding: 50px;
+          padding: 2%;
         }
 
 #map-container {
           position: relative;
           height: 600px;
-          width:600px;
+          width:100%;
         }
 
 #map {
@@ -30,4 +30,21 @@ h2      {
 
           font-family: amaranth !important;
 
+        }
+.btn-default {
+          height: 10%;
+          margin-left: 20%;
+        }
+
+.btn-group .dropdown-menu a{
+          color:#fff;
+        }
+
+.btn-default .dropdown-menu {
+          color: #000 !important;
+        }
+.btn-default .dropdown-menu li > a:hover,
+.btn-default .dropdown-menu li > a:focus {
+          background-color: #000 !important;
+          color:#fff !important;
         }

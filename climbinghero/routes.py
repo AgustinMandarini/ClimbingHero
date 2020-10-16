@@ -1,29 +1,27 @@
 import os
 from climbinghero import app, db
-from climbinghero.models import JSONEncodedDict, Sectors
+from climbinghero.models import JSONEncodedDict, Country, Province, Sector, Subsector, Route
 from flask import Flask, flash, redirect, request, render_template, session, url_for
 import json
 
-@app.route('/home')
+@app.route('/home', methods = ['GET', 'POST'])
 @app.route('/')
 def home():
     sectorsArea = []
-    sectors_list = Sectors.query.all()
-    for sector in sectors_list:
-        sectorsArea.append(sector.area)
-
-    print(sectorsArea)
-    print(type(sectorsArea))
-    print(type(sectorsArea[0]))
-
-    return render_template("map.html", title="Map", h2title="Wellcome to ClimbingHero!", sectorsArea = sectorsArea)
+    sectors = Sector.query.all()
+    for sector in sectors:
+        sectorsArea.append(sector.coord)
+    
+    return render_template("map.html", title="Map",\
+    h2title="Encontra tu sector aca!", sectorsArea = sectorsArea, \
+    sectors = sectors)
 
 @app.route('/new_sector', methods = ['GET', 'POST'])
 def new_sector():
     if request.method == "POST":
         mapFeatures = request.get_json()
-        sector = Sectors(area=mapFeatures)
-        db.session.add(sector)
+        subsector = Subsector(area=mapFeatures)
+        db.session.add(subsector)
         db.session.commit()
         # redirection to home is by AJAX call
 
