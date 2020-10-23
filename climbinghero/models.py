@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.types import TypeDecorator, VARCHAR
 from climbinghero import db
@@ -20,15 +21,17 @@ class JSONEncodedDict(TypeDecorator):
 
 class Continent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(2), nullable=False)
-    name = db.Column(db.String(60))
+    code = db.Column(db.String(11), nullable=False)
+    name = db.Column(db.String(255))
 
     country = db.relationship('Country', lazy=True)
 
 class Country(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(2), nullable=False)
-    name = db.Column(db.String(60), nullable=True)
+    name = db.Column(db.String(255), nullable=True)
+    cca2 = db.Column(db.String(2), nullable=False)
+    cca3 = db.Column(db.String(3), nullable=False)
+    ccn3 = db.Column(db.Integer, nullable=False)
 
     continent_id = db.Column(db.Integer, db.ForeignKey('continent.id'), nullable=False)
 
@@ -38,6 +41,7 @@ class Country(db.Model):
 class Province(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=True)
+    hasc = db.Column(db.String(60), nullable=False)
 
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'), nullable=False)
 
@@ -52,8 +56,6 @@ class Sector(db.Model):
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     province_id = db.Column(db.Integer, db.ForeignKey('province.id'), nullable=False)
-    user_id_created = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user_id_modified = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     subsector = db.relationship('Subsector', lazy=True)
     route = db.relationship('Route', lazy=True)
@@ -68,8 +70,6 @@ class Subsector(db.Model):
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     sector_id = db.Column(db.Integer, db.ForeignKey('sector.id'), nullable=False)
-    user_id_created = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user_id_modified = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     route = db.relationship('Route', lazy=True)
 
@@ -86,8 +86,6 @@ class Route(db.Model):
 
     sector_id = db.Column(db.Integer, db.ForeignKey('sector.id'), nullable=False)
     subsector_id = db.Column(db.Integer, db.ForeignKey('subsector.id'))
-    user_id_created = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user_id_modified = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -96,8 +94,4 @@ class User(db.Model):
     password = db.Column(db.String(60), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    country_id = db.Column(db.Integer, db.ForeignKey('country.id'), nullable=False)
-
-    sector = db.relationship('Sector', lazy=True)
-    subsector = db.relationship('Subsector', lazy=True)
-    route = db.relationship('Route', lazy=True)
+    country_name = db.Column(db.Integer, db.ForeignKey('country.name'), nullable=False)

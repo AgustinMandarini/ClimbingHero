@@ -2,16 +2,21 @@
 {% block content %}
 <div class="contanier">
   <div class="row">
-    <div class="col-md-3 btn-group">
-
+    <div class="col-md-3 left-nav">
+      <h3>Agrega nuevas áreas:</h3>
+      <div class="form-group">
+        <select class="form-control" name="País">
+          <option disabled selected value>País</option>
+            {% for country in countries %}
+                <option>{{ country.name }}</option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="btn-group btn-group-vertical">
         <button class="btn btn-default" type="button">Nuevo Sector</button>
-        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button"></button>
-        <ul class="dropdown-menu">
-          {% for prov in sectors %}
-    		    <li><a href="#">{{ sector.name }}</a></li>
-          {% endfor %}
-        </ul>
-
+        <button class="btn btn-default" type="button">Nuevo Sub-Sector</button>
+        <button class="btn btn-default" type="button">Nueva Ruta</button>
+      </div>
     </div>
     <div class="col-md-9">
       <div id="map-container">
