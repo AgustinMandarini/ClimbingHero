@@ -3,20 +3,70 @@
 <div class="contanier">
   <div class="row">
     <div class="col-md-3 left-nav">
-      <h3>Agrega nuevas áreas:</h3>
-      <div class="form-group">
-        <select class="form-control" name="País">
-          <option disabled selected value>País</option>
-            {% for country in countries %}
-                <option>{{ country.name }}</option>
-            {% endfor %}
-        </select>
-      </div>
-      <div class="btn-group btn-group-vertical">
-        <button class="btn btn-default" type="button">Nuevo Sector</button>
-        <button class="btn btn-default" type="button">Nuevo Sub-Sector</button>
-        <button class="btn btn-default" type="button">Nueva Ruta</button>
-      </div>
+      <form action="">
+        <h3>Agrega nuevas áreas</h3>
+        <div class="form-group">
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Ubicación: </legend>
+            <div class="form-group">
+              {{ form.continent }} 
+            </div>
+            <div class="form-group">
+              {{ form.country }} 
+            </div>
+            <div class="form-group">
+              {{ form.province }} 
+            </div>
+          </fieldset>
+          <script>
+            var continent_select = document.getElementById("continent");
+            var country_select = document.getElementById("country");
+            var province_select = document.getElementById("province")
+
+            continent_select.onchange = function()  {
+                 
+                continent = continent_select.value;
+                
+                fetch('/country/' + continent).then(function(response) {
+
+                    response.json().then(function(data) {
+                        var optionHTML = '';
+
+                        for (var country of data.countries) {
+                            optionHTML += '<option value="' + country.id + '">' + country.name + '</option>';
+                        }
+
+                        country_select.innerHTML = optionHTML;
+                    })
+                    
+                });
+            }
+            country_select.onchange = function()  {
+                 
+                country = country_select.value;
+                
+                fetch('/province/' + country).then(function(response) {
+
+                    response.json().then(function(data) {
+                        var optionHTML = '';
+
+                        for (var province of data.provinces) {
+                            optionHTML += '<option value="' + province.id + '">' + province.name + '</option>';
+                        }
+
+                        province_select.innerHTML = optionHTML;
+                    })
+                    
+                });
+            }
+    </script>
+        </div>
+        <div class="btn-group btn-group-vertical">
+          <button class="btn btn-default" type="button">Nuevo Sector</button>
+          <button class="btn btn-default" type="button">Nuevo Sub-Sector</button>
+          <button class="btn btn-default" type="button">Nueva Ruta</button>
+        </div>
+      </form>
     </div>
     <div class="col-md-9">
       <div id="map-container">
