@@ -45,7 +45,7 @@ document.getElementById('export').onclick = function(){
   data = featureGroup.toGeoJSON();
 
   $.ajax({
-    url: "/new_sector",
+    url: "/new_place",
     type: "POST",
     contentType: "application/json",
     data: JSON.stringify(data),

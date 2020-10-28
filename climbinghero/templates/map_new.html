@@ -1,0 +1,180 @@
+{% extends "layout.html" %}
+
+{% block leaflet_draw %}
+  <!--Leaflet draw plugin -->
+  <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css'>
+  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
+{% endblock %}
+
+{% block content %}
+  <div class="contanier">
+  <div class="row">
+    <div class="col-md-3 left-nav">
+      <form method="POST" action="/home">
+        <h3>{{ data['submit'] }} en: </h3>
+        <div class="form-group">
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ data['province'] }}, {{ data['country'] }}</legend>
+
+            {% if data['submit'] != 'Nueva Ruta' %}
+              <div class="form-group">
+                {{ form.name.label(class="form-control-label") }}
+
+                {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.name(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.descr.label(class="form-control-label") }}
+
+                {% if form.descr.errors %}
+                    {{ form.descr(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.descr.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.descr(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.getin.label(class="form-control-label") }}
+
+                {% if form.getin.errors %}
+                    {{ form.getin(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.getin.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.getin(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+            {% else %}
+              <div class="form-group">
+                {{ form.name.label(class="form-control-label") }}
+
+                {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.name(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.leng.label(class="form-control-label") }}
+
+                {% if form.leng.errors %}
+                    {{ form.leng(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.leng.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.leng(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.pitch.label(class="form-control-label") }}
+
+                {% if form.pitch.errors %}
+                    {{ form.pitch(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.pitch.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.pitch(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.grade.label(class="form-control-label") }}
+
+                {% if form.grade.errors %}
+                    {{ form.grade(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.grade.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.grade(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.style.label(class="form-control-label") }}
+
+                {% if form.style.errors %}
+                    {{ form.style(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.style.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.style(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.descr.label(class="form-control-label") }}
+
+                {% if form.descr.errors %}
+                    {{ form.descr(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.descr.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.descr(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.equip.label(class="form-control-label") }}
+
+                {% if form.equip.errors %}
+                    {{ form.equip(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.equip.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.equip(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+            {% endif %}
+          </fieldset>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-9">
+      <div id="map-container">
+        <div id="map"></div>
+      </div>
+      <button id="delete" class="btn btn-danger">Borrar areas dibujadas</button>
+    </div>
+  </div>
+</div>
+
+<button id="export" class="btn btn-primary">Crear {{ data['submit'] }}</button>
+{% endblock %}
+
+{% block script %}
+  <script src="{{ url_for('static', filename='map_edit.js') }}"></script> 
+{% endblock %}

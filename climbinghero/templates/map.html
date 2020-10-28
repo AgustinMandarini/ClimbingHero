@@ -3,19 +3,19 @@
 <div class="contanier">
   <div class="row">
     <div class="col-md-3 left-nav">
-      <form action="">
+      <form method="POST" action="/home">
         <h3>Agrega nuevas áreas</h3>
         <div class="form-group">
           <fieldset class="form-group">
             <legend class="border-bottom mb-4">Ubicación: </legend>
             <div class="form-group">
-              {{ form.continent }} 
+              {{ form.continent(class="form-control form-control-lg") }} 
             </div>
             <div class="form-group">
-              {{ form.country }} 
+              {{ form.country(class="form-control form-control-lg") }} 
             </div>
             <div class="form-group">
-              {{ form.province }} 
+              {{ form.province(class="form-control form-control-lg") }} 
             </div>
           </fieldset>
           <script>
@@ -37,6 +37,21 @@
                         }
 
                         country_select.innerHTML = optionHTML;
+                        country = country_select.value;
+                
+                        fetch('/province/' + country).then(function(response) {
+
+                            response.json().then(function(data) {
+                                var optionHTML = '';
+
+                                for (var province of data.provinces) {
+                                    optionHTML += '<option value="' + province.id + '">' + province.name + '</option>';
+                                }
+
+                                province_select.innerHTML = optionHTML;
+                            })
+                            
+                        });
                     })
                     
                 });
@@ -59,12 +74,18 @@
                     
                 });
             }
-    </script>
+          </script>
         </div>
-        <div class="btn-group btn-group-vertical">
-          <button class="btn btn-default" type="button">Nuevo Sector</button>
-          <button class="btn btn-default" type="button">Nuevo Sub-Sector</button>
-          <button class="btn btn-default" type="button">Nueva Ruta</button>
+        <div class="col-md-3">
+          <div class="form-group">
+            {{ form.submit(class="btn btn-secondary", value="Nuevo Sector") }}
+          </div>
+          <div class="form-group">
+            {{ form.submit(class="btn btn-secondary", value="Nuevo Sub-sector") }}
+          </div> 
+          <div class="form-group">
+            {{ form.submit(class="btn btn-secondary", value="Nueva Ruta") }}
+          </div>
         </div>
       </form>
     </div>
