@@ -10,7 +10,7 @@
   <div class="contanier">
   <div class="row">
     <div class="col-md-3 left-nav">
-      <form method="POST" action="/home">
+      <form>
         <h3>{{ data['submit'] }} en: </h3>
         <div class="form-group">
           <fieldset class="form-group">
@@ -167,12 +167,12 @@
       <div id="map-container">
         <div id="map"></div>
       </div>
+      <button id="export" class="btn btn-primary">Crear {{ data['submit'] }}</button>
       <button id="delete" class="btn btn-danger">Borrar areas dibujadas</button>
     </div>
   </div>
 </div>
 
-<button id="export" class="btn btn-primary">Crear {{ data['submit'] }}</button>
 {% endblock %}
 
 {% block script %}

@@ -95,3 +95,15 @@ class User(db.Model):
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     country_name = db.Column(db.Integer, db.ForeignKey('country.name'), nullable=False)
+
+class Grades(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    american = db.Column(db.String(12))
+    british = db.Column(db.String(12))
+    french = db.Column(db.String(12))
+    uiaa = db.Column(db.String(12))
+    saxon = db.Column(db.String(12))
+    australian = db.Column(db.String(12))
+    finnish = db.Column(db.String(12))
+    norwegian = db.Column(db.String(12))
+    brazilian = db.Column(db.String(12))

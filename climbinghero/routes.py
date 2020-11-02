@@ -1,19 +1,22 @@
 import os
 from climbinghero import app, db
-from climbinghero.models import Continent, Country, Province, Sector, Subsector, Route, User
+from climbinghero.models import Continent, Country, Province, Sector, Subsector, Route, User, Grades
 from climbinghero.forms import NewAreaCreationForm, NewSector, NewSubSector, NewRoute
 from flask import Flask, flash, redirect, request, render_template, session, url_for, jsonify
 import json
+
 
 
 @app.route('/home', methods = ['GET', 'POST'])
 @app.route('/')
 def home():
 
+    print("redireccion a home, antes que nada")
     form = NewAreaCreationForm()
     form.continent.choices = [(continent.id, continent.name) for continent in Continent.query.all()]
 
     if request.method == "POST":
+        print("redireccion a home, justo despues de POST")
         continent = Continent.query.filter_by(id=form.continent.data).first()
         country = Country.query.filter_by(id=form.country.data).first()
         province = Province.query.filter_by(id=form.province.data).first()
@@ -28,8 +31,6 @@ def home():
                                     'submit': submit})
 
         return redirect(url_for('new_place', new_area_data=new_area_data))
-
-    #'<h1>Continent : {}, Country: {}, Province: {}</h1>'.format(continent.name, country.name, province.name)
 
     sectorsArea = []
     sectors = Sector.query.all()
@@ -71,21 +72,35 @@ def province(country):
 @app.route('/new_place/<new_area_data>', methods = ['GET', 'POST'])
 def new_place(new_area_data):
 
-    data = json.loads(new_area_data)
-    print(data['submit'])
+    if request.method == "GET":
 
-    if data['submit'] == 'Nuevo Sector':
-        form = NewSector()    
-    elif data['submit'] == 'Nuevo Sub-sector':
-        form = NewSubSector()
-    elif data['submit'] == 'Nueva Ruta':
-        form =  NewRoute()
+        data = json.loads(new_area_data)
+        if data['submit'] == 'Nuevo Sector':
+            form = NewSector()
+            form.parent.data = data['province']
 
+        elif data['submit'] == 'Nuevo Sub-sector':
+            form = NewSubSector()
+
+        elif data['submit'] == 'Nueva Ruta':
+            form =  NewRoute()
+            form.grade.choices = [(grade.id, grade.french) for grade in Grades.query.all()]
+
+        return render_template("map_new.html", title="New Area", 
+                            h2title="Use the map to add new routes!", 
+                            data=data, form=form)
+  
     if request.method == "POST":
-        mapFeatures = request.get_json()
-        subsector = Subsector(area=mapFeatures)
-        db.session.add(subsector)
-        db.session.commit()
-        # redirection to home is by AJAX call                                               								
 
-    return render_template("map_new.html", title="New Area", h2title="Use the map to add new routes!", data=data, form=form)
+        ajaxpost = request.get_json()
+
+        print(ajaxpost)
+    
+        return redirect(url_for("home"))
+        # Redirection to home is also in AJAX call, in map_edit.js
+        # For a reason i dont know, redirection needs to be called in both
+        # here (new_place route) and in AJAX POST request.
+        # Involved in this bug is also the fact that two GET requests are
+        # being sent to home route, one of wich does not redirect, the
+        # other one does.
+    
