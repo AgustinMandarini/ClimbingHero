@@ -15,8 +15,16 @@
         <div class="form-group">
           <fieldset class="form-group">
             <legend class="border-bottom mb-4">{{ data['province'] }}, {{ data['country'] }}</legend>
+            
+            <!-- If user clicked "Nuevo Sector" or "Nuevo Subsector" -->
+            {% if data['submit'] != 'Nueva Ruta' %} 
 
-            {% if data['submit'] != 'Nueva Ruta' %}
+              <!-- This one next is as hidden tag that contains the parent's ID to whom new area belongs
+                   If it is a new sector, it will be child of a specific province. 
+                   If it is a new subsector, it will be child of a specific -->
+              {% if data['submit'] == 'Nuevo Sector' %}
+                <input type="hidden" id="parent" name="parent" value="{{ data['province_id'] }}">
+              {% endif %}
               <div class="form-group">
                 {{ form.name.label(class="form-control-label") }}
 

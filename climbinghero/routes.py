@@ -77,7 +77,6 @@ def new_place(new_area_data):
         data = json.loads(new_area_data)
         if data['submit'] == 'Nuevo Sector':
             form = NewSector()
-            form.parent.data = data['province']
 
         elif data['submit'] == 'Nuevo Sub-sector':
             form = NewSubSector()
@@ -91,12 +90,14 @@ def new_place(new_area_data):
                             data=data, form=form)
   
     if request.method == "POST":
-
         ajaxpost = request.get_json()
-
-        print(ajaxpost)
-    
-        return redirect(url_for("home"))
+        province_id = int(ajaxpost["parent"])
+        sector = Sector(name=ajaxpost["name"], descr=ajaxpost["descr"], getin=ajaxpost["getin"], \
+                        province_id=province_id, coord=ajaxpost["mapfeatures"])
+        db.session.add(sector)
+        db.session.commit()
+        
+        return redirect("/home")
         # Redirection to home is also in AJAX call, in map_edit.js
         # For a reason i dont know, redirection needs to be called in both
         # here (new_place route) and in AJAX POST request.

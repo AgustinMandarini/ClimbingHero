@@ -43,12 +43,13 @@ $("document").ready(function(){
         var name = $("#name").val();
         var descr = $("#descr").val();
         var getin = $("#getin").val();
+        var parent = $("#parent").val();
         mapfeatures = featureGroup.toGeoJSON();
         $.ajax({
-            url: "/new_place",
+            url: "/new_place/<new_area_data>", //In order to work properly, url must specify variable <new_area_data>
             type: "POST",
             contentType: "application/json",
-            data: JSON.stringify({"name": name, "descr": descr, "getin": getin, "mapfeatures": mapfeatures}),
+            data: JSON.stringify({"name": name, "descr": descr, "getin": getin, "parent": parent, "mapfeatures": mapfeatures}),
             success: function(){
               window.location.href = "/home";
             }
