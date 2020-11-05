@@ -9,7 +9,7 @@
 {% block content %}
   <div class="contanier">
   <div class="row">
-    <div class="col-md-3 left-nav">
+    <div class="col-md-3 left-nav form">
       <form>
         <h3>{{ data['submit'] }} en: </h3>
         <div class="form-group">
@@ -172,12 +172,10 @@
       </form>
     </div>
     <div class="col-md-9">
-      <div id="map-container">
-        <div id="map"></div>
-      </div>
-      <button id="export" class="btn btn-primary">Crear {{ data['submit'] }}</button>
-      <button id="delete" class="btn btn-danger">Borrar areas dibujadas</button>
+      <div id="map"></div>
     </div>
+    <button id="export" class="btn btn-primary">Crear {{ data['submit'] }}</button>
+    <button id="delete" class="btn btn-danger">Borrar areas dibujadas</button>
   </div>
 </div>
 

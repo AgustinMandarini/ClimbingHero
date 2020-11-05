@@ -61,14 +61,14 @@
                 </div>
             </header>
         {% endif %}
-      <div class="contaniner-fluid">
+      <div class="contaniner-fluid main-container">
         <div class="row">
           <div class="col-md">
             <h2>{{ h2title }}</h2>
           </div>
         </div>
+        {% block content %}{% endblock %}
       </div>
-      {% block content %}{% endblock %}
     </main>
     <!-- Leaflet map -->
     {% block script %}{% endblock%}

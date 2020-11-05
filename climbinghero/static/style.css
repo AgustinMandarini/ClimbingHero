@@ -18,17 +18,17 @@ h3      {
           font-size: 16px;
         }
 
-#map-container {
-          position: relative;
+.form    {
+          background-color: rgba(45, 45, 45, 0.08);
+          padding: 10px;
+        }
+
+#map    {
+          position: absolute;
           height: 600px;
           width:100%;
         }
 
-#map {
-          position: relative;
-          height: inherit;
-          width: inherit;
-        }
 
 .navbar-brand {
 
@@ -55,4 +55,8 @@ h3      {
 .btn-default .dropdown-menu li > a:focus {
           background-color: #000 !important;
           color:#fff !important;
+        }
+.main-container {
+          padding-right: 8%; 
+          padding-left: 8%;
         }
