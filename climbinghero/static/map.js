@@ -20,4 +20,10 @@ L.control.layers(baseMaps).addTo(map);
 
 //Sector areas recieved from /home route
 //featureGroup variable is recieved in map.html template
-L.geoJSON(featureGroup).addTo(map);
+
+var layerGroup = L.geoJSON(featureGroup, {
+  onEachFeature: function (feature, layer) {
+    layer.bindPopup('<b>' + feature.properties.name + '</b><br>Ubicación: ' +
+    						feature.properties.province + ', ' + feature.properties.country);
+  }
+}).addTo(map);

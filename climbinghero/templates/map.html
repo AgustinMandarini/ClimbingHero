@@ -99,6 +99,9 @@
 
 {% endblock %}
 {% block script %}
-  <script> var featureGroup = {{ sectorsArea | safe }} </script>
+  <script> 
+    var featureGroup = {{ sectorsArea | safe }} 
+    
+  </script>
   <script src="{{ url_for('static', filename='map.js') }}"></script>
 {% endblock %}

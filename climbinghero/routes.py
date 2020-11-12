@@ -34,12 +34,25 @@ def home():
 
     sectorsArea = []
     sectors = Sector.query.all()
+    
     for sector in sectors:
-        sectorsArea.append(sector.coord)  
-
-    return render_template("map.html", title="Map",\
-    h2title="Encontra tu sector aca!", sectorsArea = sectorsArea, \
-    form=form)
+        province = Province.query.filter_by(id = sector.province_id).first()
+        province_name = province.name
+        country = Country.query.filter_by(id = province.country_id).first()
+        country_name = country.name
+        for feat in sector.coord['features']:
+            for i in range(3):
+                feat['properties'] = {'name': sector.name, \
+                                      'province': province_name, \
+                                      'country': country_name
+                                     }
+                                
+        sectorsArea.append(sector.coord)
+             
+    print(sectorsArea)
+    return render_template("map.html", title = "Map",\
+    h2title = "Encontra tu sector aca!", sectorsArea = sectorsArea, \
+    form = form)
 
 @app.route('/country/<continent>')
 def country(continent):
